@@ -1,15 +1,26 @@
-import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import NextAuth from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 
-export const authOptions = {
-  // Configure one or more authentication providers
+export default NextAuth({
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: {
+          label: 'Email',
+          type: 'email',
+        },
+        password: {
+          label: 'Password',
+          type: 'password',
+        },
+      },
+      authorize: async ({ email, password }) => {
+        // TODO: Implement your database logic here to verify the email and password.
+        // If the credentials are valid, return a user object.
+        // Otherwise, return null.
+        return null;
+      },
     }),
-    // ...add more providers here
   ],
-}
-
-export default NextAuth(authOptions)
+})

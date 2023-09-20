@@ -1,13 +1,20 @@
-import { NextAuth } from 'next-auth';
-import { EmailProvider } from 'next-auth/providers';
+import { signIn } from 'next-auth/react'
 
-export default NextAuth({
-  providers: [
-    EmailProvider({
-      server: {
-        host: 'localhost',
-        port: 1025,
-      },
-    }),
-  ],
-});
+function LoginPage() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = async () => {
+    await signIn('credentials', { email, password })
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <button type="submit">Login</button>
+    </form>
+  )
+}
+
+export default LoginPage
