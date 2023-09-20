@@ -1,10 +1,8 @@
-import React from 'react';
+import { getPlaiceholder } from "plaiceholder";
 
-const SkeletonLoader = () => {
-  return (
-    <div className='animate-pulse bg-blue-400 h-max w-max'>
-    </div>
-  );
-};
-
-export default SkeletonLoader;
+export default async function blur (image) {
+  const imagePath = `./public/images/${image}`;
+  const { base64 } = await getPlaiceholder(imagePath);
+  console.log(base64)
+  return base64
+}
